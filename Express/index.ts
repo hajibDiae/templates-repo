@@ -1,9 +1,12 @@
-import Express from "express";
+import Express, { Request, Response } from "express";
 import cors from "cors";
-import { Request, Response } from "express";
+import mainController from "./controllers/mainController";
+
 const app = Express();
 app.use(cors());
 app.use(Express.json());
+
+app.use("/main", mainController);
 
 let server: any;
 
@@ -24,10 +27,6 @@ function startServer(port: number): Promise<Express.Application> {
     });
   });
 }
-
-app.get("/ping", (req: Request, res: Response) => {
-  res.send("pong");
-});
 
 process.on("uncaughtException", (err) => {
   console.error("Uncaught Exception:", err.stack);
